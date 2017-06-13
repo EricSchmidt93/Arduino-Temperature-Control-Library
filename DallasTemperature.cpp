@@ -186,9 +186,9 @@ void DallasTemperature::writeScratchPad(const uint8_t* deviceAddress, const uint
     // save the newly written values to eeprom
     _wire->select(deviceAddress);
     _wire->write(COPYSCRATCH, parasite);
-    delay(20);  // <--- added 20ms delay to allow 10ms long EEPROM write operation (as specified by datasheet)
+    Timer::getInstance().delayMilliseconds(20);  // <--- added 20ms delay to allow 10ms long EEPROM write operation (as specified by datasheet)
 
-    if (parasite) delay(10); // 10ms delay
+    if (parasite) Timer::getInstance().delayMilliseconds(10); // 10ms delay
     _wire->reset();
 
 }
@@ -383,10 +383,10 @@ void DallasTemperature::blockTillConversionComplete(uint8_t bitResolution){
 
     int delms = millisToWaitForConversion(bitResolution);
     if (checkForConversion && !parasite){
-        unsigned long now = millis();
-        while(!isConversionComplete() && (millis() - delms < now));
+        unsigned long now = Timer::getInstance().millis();
+        while(!isConversionComplete() && (Timer::getInstance().millis() - delms < now));
     } else {
-        delay(delms);
+        Timer::getInstance().delayMilliseconds(delms);
     }
 
 }

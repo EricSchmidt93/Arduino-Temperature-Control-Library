@@ -20,6 +20,7 @@
 
 #include <inttypes.h>
 #include <OneWire.h>
+#include "Timer.h"
 
 // Model IDs
 #define DS18S20MODEL 0x10  // also DS1820
